@@ -132,7 +132,7 @@ attention bottleneck, though at engineering complexity cost.
 The NLP community has extensively studied multi-hop reasoning in open-domain QA settings. HotpotQA~\citep{yang2018hotpotqa} provides 113K questions requiring evidence synthesis from two Wikipedia paragraphs; MuSiQue~\citep{trivedi2022musique} constructs up to 4-hop questions by composing single-hop questions with explicit bridge entities; 2WikiMultihopQA~\citep{ho2020constructing} adds cross-document coreference. Across these benchmarks, accuracy declines consistently with the number of required hops, attributed to error propagation and attention capacity limitations. However, no prior study has (a) grounded the hop--accuracy relationship in a formal theorem, (b) tested the theoretical CoT mitigation as a function of hop depth rather than on average, or (c) applied hop-count analysis to clinical EHR data.
 
 \paragraph{Clinical AI benchmarks and EHR reasoning.}
-MedQA~\citep{jin2020disease} and MMLU Medical~\citep{hendrycks2021measuring} evaluate LLMs on medical licensing examinations---closed-book multiple-choice requiring medical knowledge but not EHR navigation. Med-PaLM~\citep{singhal2023large} achieved expert-level performance on such benchmarks but was not evaluated on compositional EHR reasoning. emrQA~\citep{pampari2018emrqa} provides a large EHR QA benchmark but questions are primarily single-hop slot-filling with no compositional depth taxonomy. FDARxBench~\citep{xiong2026fdarxbench} shows retrieval and long-context grounding remain bottlenecks in document-grounded biomedical QA---consistent with our finding that the hop--accuracy relationship is not resolved by more context. MedAlign~\citep{wornow2024medalign} provides clinician-generated, open-ended questions paired with EHR XML records and clinician reference answers, making it the most ecologically valid benchmark for testing compositional EHR reasoning. No prior study has stratified MedAlign performance by compositional depth.
+MedQA~\citep{jin2020disease} and MMLU Medical~\citep{hendrycks2021measuring} evaluate LLMs on medical licensing examinations---closed-book multiple-choice requiring medical knowledge but not EHR navigation. Med-PaLM~\citep{singhal2023large} achieved expert-level performance on such benchmarks but was not evaluated on compositional EHR reasoning. emrQA~\citep{pampari2018emrqa} provides a large EHR QA benchmark but questions are primarily single-hop slot-filling with no compositional depth taxonomy. Clinical TempEval~\citep{bethard2016semeval} establishes temporal relation extraction as a distinct challenging subtask in clinical NLP, consistent with the temporal arithmetic component of our hop=3 category. FDARxBench~\citep{xiong2026fdarxbench} shows retrieval and long-context grounding remain bottlenecks in document-grounded biomedical QA---consistent with our finding that the hop--accuracy relationship is not resolved by more context. MedAlign~\citep{wornow2024medalign} provides clinician-generated, open-ended questions paired with EHR XML records and clinician reference answers, making it the most ecologically valid benchmark for testing compositional EHR reasoning. No prior study has stratified MedAlign performance by compositional depth.
 
 \paragraph{Chain-of-thought and reasoning models.}
 \citet{wei2022chain} demonstrated that chain-of-thought prompting elicits multi-step reasoning in large models; \citet{kojima2022large} showed a zero-shot CoT trigger is sufficient. \citet{nye2021show} provided theoretical grounding through scratchpads as intermediate computation. Reasoning-specialized models---including OpenAI o1~\citep{openai2024o1} and DeepSeek R1~\citep{deepseekr1_2025}---extend these ideas through reinforcement learning over extended thinking traces. \citet{merrill2024expressive} prove that transformers with polynomially many CoT tokens can solve problems inaccessible to direct inference, with required token count scaling with reasoning depth---a formal analog of the $O(k)$ computation scaling our P3 test examines empirically. No study has measured CoT benefit as a function of hop depth in clinical settings.
@@ -231,12 +231,12 @@ chain-of-thought elicitation prompt. To assess annotation reliability, a second 
 run on a stratified random sample of 50 questions (12--13 per hop level)
 using the same model and prompt (within-model reproducibility), and a
 cross-model validation was performed using \texttt{gpt-4o}.
-Within-model reliability was substantial ($\kappa = 0.787$, 95\% CI
+Within-model reproducibility was substantial ($\kappa = 0.787$, 95\% CI
 [0.603, 0.970]; 84\% exact agreement, 98\% agreement within $\pm$1 hop).
 Cross-model agreement was moderate ($\kappa = 0.464$, 95\% CI [0.292,
-0.637]; 60\% exact), reflecting divergent application of the rubric between
-model families. All annotations were finalized and locked before any
-model inference was run, precluding post-hoc adjustment.
+0.637]; 60\% exact), reflecting divergent rubric calibration between model
+families. All annotations were finalized and locked before any model inference
+was run, precluding post-hoc adjustment.
 
 \paragraph{Experimental design.}
 We evaluate two conditions using \texttt{claude-sonnet-4-6}, a publicly
@@ -430,7 +430,7 @@ The near-zero differences across all hops are consistent with the null P2 result
 \end{figure}
 
 \paragraph{Primary outcome: hop $\times$ condition interaction.}
-Cochran--Armitage trend tests confirmed monotone accuracy decline for both conditions (ZS: $z = -2.38$, $p = 0.009$; ET: $z = -2.69$, $p = 0.004$). GEE logistic regression showed each additional hop associated with a 28\% odds reduction under ZS (OR = 0.72, 95\% CI [0.56, 0.92], $p = 0.008$) and 30\% under ET (OR = 0.70 [0.55, 0.88], $p = 0.003$), confirming P1. The main effect of ET did not reach significance (OR = 1.18, $p = 0.32$). The hop $\times$ condition interaction (P2 test) was not significant (OR = 0.97 [0.84, 1.13], $p = 0.72$), and EHR length covariates were non-significant ($p = 0.67$, $p = 0.24$).
+Cochran--Armitage trend tests confirmed monotone accuracy decline for both conditions (ZS: $z = -2.38$, $p = 0.009$; ET: $z = -2.69$, $p = 0.004$). GEE logistic regression showed each additional hop associated with a 28\% odds reduction under ZS (OR = 0.72, 95\% CI [0.56, 0.92], $p = 0.008$) and 30\% under ET (OR = 0.70 [0.55, 0.88], $p = 0.003$), confirming P1. The main effect of ET did not reach significance (OR = 1.18, 95\% CI [0.85, 1.65], $p = 0.32$). The hop $\times$ condition interaction (P2 test) was not significant (OR = 0.97 [0.84, 1.13], $p = 0.72$), and EHR length covariates were non-significant ($p = 0.67$, $p = 0.24$).
 
 \paragraph{Question-type sensitivity analysis.}
 Adjusting for reasoning type strengthened the hop OR (0.72 unadjusted $\to$ 0.57, 95\% CI [0.38, 0.84], $p = 0.005$), indicating question-type composition does not explain the hop effect. Within-comparative-type CA trend ($z = -1.90$, $p = 0.029$) confirmed P1 within a single reasoning category (hops 2--4, $n = 16$, $30$, $20$; Appendix~\ref{app:qtype}).
@@ -462,22 +462,22 @@ hops 1--2.}
 \end{figure}
 
 \paragraph{Context sufficiency audit and truncation robustness.}
-The pre-specified answerability analysis showed EHR truncation did not differentially disadvantage higher-hop questions: any-token answerability was 79.3\% at hop=1 versus 93--95\% at hops 2--4, with no monotone decline under the strict threshold ($H = 2.1$, Kruskal--Wallis $p = 0.55$), ruling out truncation as a confounder (Appendix~\ref{app:context_sufficiency}). A pre-specified ZS-32K ablation ($4\times$ context expansion, 32{,}000 characters) confirmed P1 persists with larger context: hop=1 31.5\%, hop=2 19.6\%, hop=3 14.3\%, hop=4 14.4\% (CA $z = -3.12$, $p < 0.001$).
+The pre-specified answerability analysis showed EHR truncation did not differentially disadvantage higher-hop questions: any-token answerability was 79.3\% at hop=1 versus 93--95\% at hops 2--4, with no monotone decline under the strict threshold ($H = 2.1$, Kruskal--Wallis $p = 0.55$), ruling out truncation as a confounder (Appendix~\ref{app:context_sufficiency}). The pre-specified ZS-32K ablation ($4\times$ context expansion, 32{,}000 characters) provides a behavioral test independent of any lexical metric: if truncation caused the accuracy decline, $4\times$ more context should attenuate P1, yet P1 strengthened (CA $z = -3.12$, $p < 0.001$; hop=1 31.5\%, hop=2 19.6\%, hop=3 14.3\%, hop=4 14.4\%), establishing that the degradation reflects compositional reasoning difficulty rather than context availability.
 
 \paragraph{Additional reasoning conditions.}
 Two further conditions confirmed the null P2 result. An explicit four-step structured CoT condition (\textit{ExplicitCoT}, $n = 301$) showed no significant P2 flattening (OR $= 0.90$, 95\% CI [0.71, 1.15], $p = 0.41$; overall accuracy 19.3\%). An extended thinking condition with a $5\times$ larger budget (\textit{ET-16K}, 16{,}000 tokens, $n = 179$ completions) also showed no P2 flattening (OR $= 1.03$, $p = 0.86$), and mean thinking-token usage scaled proportionally (83--190 tokens vs.\ 70--135 under the 3K budget). Importantly, ExplicitCoT shifted the error type profile: hallucination fell from 9.6\% to 0.3\% while omissions rose from 59.1\% to 76.1\%, consistent with explicit decomposition causing the model to recognise insufficient EHR evidence rather than confabulate. Full results and ET-16K selection bias analysis are in Appendix~\ref{app:ablations}.
 
 % ── Multi-model replication (GPT-4o) ──────────────────────────────────────────
 \paragraph{Cross-architecture replication.}
-To assess generalizability beyond a single model family, we ran a zero-shot replication on all 301 questions using \texttt{gpt-4o} (different provider, same EHR context, judge, and questions). GPT-4o accuracy declined monotonically from 37.8\% [29.4, 47.1] at hop=1 to 14.7\% [9.1, 22.9] at hop=4 (Table~\ref{tab:main_results}; CA $z = -3.80$, $p < 0.0001$; GEE OR per hop = 0.58 [0.45, 0.75], $p < 0.001$), a steeper slope than Claude Sonnet (OR $= 0.72$). Error type profiles mirrored Claude's pattern: omissions escalated from 56.8\% to 81.4\% at hop=4. The hop--accuracy degradation is thus a cross-architecture property, not an artifact of a single model family.
+To assess generalizability beyond a single model family, we ran a zero-shot replication on all 301 questions using \texttt{gpt-4o} (different provider, same EHR context, judge, and questions). GPT-4o accuracy declined monotonically from 37.8\% [29.4, 47.1] at hop=1 to 14.7\% [9.1, 22.9] at hop=4 (Table~\ref{tab:main_results}; CA $z = -3.80$, $p < 0.0001$; GEE OR per hop = 0.58 [0.45, 0.75], $p < 0.001$), a steeper slope than Claude Sonnet (OR $= 0.72$). Error type profiles mirrored Claude's pattern: omissions escalated from 56.8\% to 81.4\% at hop=4. The hop--accuracy degradation is thus a cross-architecture property, not an artifact of a single model family; and the steeper GPT-4o slope against the same Claude-generated hop labels provides an implicit validity check on the taxonomy (a model-biased taxonomy would predict a \emph{weaker} replication slope, not a stronger one).
 
 % ── 6. Discussion ─────────────────────────────────────────────────────────────
 \section{Discussion}
 
 \paragraph{Empirical findings and theoretical alignment.}
-Consistent with P1, zero-shot accuracy declines monotonically with a 28\% per-hop odds reduction (OR = 0.72, $p = 0.008$), replicating under GPT-4o zero-shot (OR = 0.58, $p < 0.001$) and not attributable to EHR truncation (context sufficiency audit: answerability 93--95\% at hops 2--4 vs.\ 79\% at hop=1). These findings are consistent with---but not strictly derived from---the Peng single-layer impossibility; we treat the theorem as motivating qualitative predictions in the multi-layer setting. Question-type adjustment strengthens rather than explains the hop effect (OR 0.72 unadjusted $\to$ 0.57 adjusted, $p = 0.005$), and within-comparative-type Cochran--Armitage trend confirms P1 within a single reasoning category ($z = -1.90$, $p = 0.029$). The ZS-32K ablation confirms P1 persists with $4\times$ context expansion.
+Consistent with P1, zero-shot accuracy declines monotonically (OR = 0.72, $p = 0.008$), replicating cross-architecture (GPT-4o OR = 0.58, $p < 0.001$), and not attributable to EHR truncation or question-type composition (adjusted OR = 0.57, $p = 0.005$; ZS-32K CA $z = -3.12$, $p < 0.001$). These findings are consistent with---but not strictly derived from---the Peng single-layer impossibility, which we treat as motivating qualitative predictions in the multi-layer setting.
 
-Prediction P3 is confirmed: thinking tokens scale with hop ($r = 0.31$, $p < 0.0001$), consistent with the theoretical $O(k)$ requirement, and mean usage (70--135 tokens) was far below the budget ceiling, indicating the P2 null result reflects model behavior rather than budget exhaustion. Prediction P2 was not confirmed across three convergent conditions (ET-3K $p = 0.72$; ExplicitCoT $p = 0.41$; ET-16K $p = 0.86$), establishing a qualitative failure of multi-hop decomposition rather than a quantitative compute deficit. The pre-registered hop=3 validation (+9.1 pp CoT advantage) and the ExplicitCoT hallucination-to-omission shift are consistent with the theoretical mechanism and carry direct clinical safety implications: omission is recoverable via escalation, whereas hallucination may not prompt appropriate scrutiny.
+P3 is confirmed: thinking tokens scale with hop ($r = 0.31$, $p < 0.0001$) and mean usage (70--135 tokens) was far below the budget ceiling, indicating P2's null result reflects model behavior rather than budget exhaustion. P2 was not confirmed across three convergent conditions (ET-3K $p = 0.72$; ExplicitCoT $p = 0.41$; ET-16K $p = 0.86$). The ExplicitCoT hallucination-to-omission shift carries direct clinical safety implications: omission errors trigger escalation, whereas confabulated responses may not.
 
 \paragraph{Clinical deployment implications.}
 Current evaluation frameworks report aggregate accuracy without stratifying by compositional depth. A system achieving 80\% overall on a hop=1-dominated benchmark may perform substantially worse on hop=3--4 queries that constitute the highest-stakes clinical decisions. Hop-count stratification provides a principled complement to existing safety frameworks~\citep{noharm2025}, identifying tasks where reasoning-augmented inference is required and aggregate accuracy is an insufficient safety proxy.
@@ -738,6 +738,17 @@ with somewhat different calibration. This divergence suggests that the hop
 construct captures a meaningful but partially model-dependent dimension of
 question complexity, and future studies should standardize the annotator or
 report cross-model reliability explicitly.
+
+Importantly, the cross-architecture P1 replication provides an implicit validity
+check on the taxonomy. If Claude-generated hop labels reflected model-specific
+difficulty rather than genuine compositional depth, GPT-4o---which disagrees
+with Claude's labels at the 40\% exact rate---would be expected to show a
+\emph{weaker} hop--accuracy slope when evaluated against those labels.
+Instead, GPT-4o shows a steeper per-hop odds reduction (OR = 0.58 vs.\ Claude
+OR = 0.72), supporting the interpretation that the taxonomy indexes a
+domain-general rather than model-specific difficulty construct. Human expert
+re-annotation of a stratified subset is identified as a priority for
+confirmatory future work.
 
 \section{Judge Validation}
 \label{app:judge}
