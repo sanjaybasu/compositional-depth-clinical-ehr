@@ -103,28 +103,28 @@
   },
   "glmm_primary": {
     "method": "BinomialBayesMixedGLM",
-    "b_hop": -0.282612646679584,
-    "or_hop": 0.7538117227888758,
-    "p_hop": 0.006185701047529246,
-    "b_interact": -0.8361040892223804,
-    "or_interact": 0.4333957096461955,
-    "p_interact": 9.293333214088761e-09,
-    "ci_or_interact_lo": 0.32580812749529425,
-    "ci_or_interact_hi": 0.5765106063612311,
+    "b_hop": -1.7649679821506774,
+    "or_hop": 0.171192267605423,
+    "p_hop": 3.8551415393328625e-08,
+    "b_interact": 0.5726455663784258,
+    "or_interact": 1.7729513128232026,
+    "p_interact": 0.06444869616058435,
+    "ci_or_interact_lo": 0.9662268977604344,
+    "ci_or_interact_hi": 3.2532279580783103,
     "n_random_effects": 301
   },
   "gee_sensitivity": {
     "method": "GEE",
-    "b_hop": -0.32657146590239816,
-    "or_hop": 0.7213928182176194,
-    "ci_or_hop_lo": 0.5658887383484151,
-    "ci_or_hop_hi": 0.9196288296791422,
-    "p_hop": 0.008380469566303264,
-    "b_interact": -0.027209544063690493,
-    "or_interact": 0.973157300822377,
-    "p_interact": 0.723668483666288,
-    "ci_or_interact_lo": 0.8369040329626597,
-    "ci_or_interact_hi": 1.131593462145675
+    "b_hop": -0.32657146590239805,
+    "or_hop": 0.7213928182176195,
+    "ci_or_hop_lo": 0.5658887383484146,
+    "ci_or_hop_hi": 0.9196288296791433,
+    "p_hop": 0.00838046956630358,
+    "b_interact": -0.027209544063690673,
+    "or_interact": 0.9731573008223767,
+    "p_interact": 0.723668483666289,
+    "ci_or_interact_lo": 0.8369040329626583,
+    "ci_or_interact_hi": 1.1315934621456765
   },
   "ehr_truncation": {
     "by_hop": {
@@ -195,63 +195,63 @@
   "new_conditions": {
     "et16k": {
       "hop1": {
-        "acc": 0.3793,
-        "n": 29
+        "acc": 0.2838,
+        "n": 74
       },
       "hop2": {
-        "acc": 0.4545,
-        "n": 11
+        "acc": 0.2812,
+        "n": 32
       },
       "hop3": {
-        "acc": 0.4,
-        "n": 10
+        "acc": 0.2941,
+        "n": 17
       },
       "hop4": {
-        "acc": 0.2121,
-        "n": 33
+        "acc": 0.1964,
+        "n": 56
       }
     },
     "explicit_cot": {
       "hop1": {
-        "acc": 0.3226,
-        "n": 62,
-        "ci_lo": 0.2195,
-        "ci_hi": 0.4463
+        "acc": 0.2883,
+        "n": 111,
+        "ci_lo": 0.2122,
+        "ci_hi": 0.3785
       },
       "hop2": {
-        "acc": 0.1786,
-        "n": 28,
-        "ci_lo": 0.0788,
-        "ci_hi": 0.3559
+        "acc": 0.1739,
+        "n": 46,
+        "ci_lo": 0.0909,
+        "ci_hi": 0.3072
       },
       "hop3": {
-        "acc": 0.0625,
-        "n": 16,
-        "ci_lo": 0.0111,
-        "ci_hi": 0.2833
+        "acc": 0.0952,
+        "n": 42,
+        "ci_lo": 0.0377,
+        "ci_hi": 0.2207
       },
       "hop4": {
-        "acc": 0.1455,
-        "n": 55,
-        "ci_lo": 0.0756,
-        "ci_hi": 0.2616
+        "acc": 0.1373,
+        "n": 102,
+        "ci_lo": 0.0836,
+        "ci_hi": 0.2173
       },
-      "ca_z": -2.451,
-      "ca_p": 0.0142
+      "ca_z": -2.948,
+      "ca_p": 0.0032
     }
   },
   "cot_gee_results": {
     "method": "GEE_cot_vs_zs",
-    "b_hop": -0.27059760300340086,
-    "or_hop": 0.7629234327437645,
-    "ci_or_hop_lo": 0.6007708354972298,
-    "ci_or_hop_hi": 0.9688422437280799,
-    "p_hop": 0.02644559432411404,
-    "b_interact": -0.14767398240359234,
-    "or_interact": 0.8627123284989991,
-    "ci_or_interact_lo": 0.6122509742770413,
-    "ci_or_interact_hi": 1.2156331194458574,
-    "p_interact": 0.3986772873135256
+    "b_hop": -0.2829424700892747,
+    "or_hop": 0.7535631390328251,
+    "ci_or_hop_lo": 0.5971518161949808,
+    "ci_or_hop_hi": 0.9509431087849012,
+    "p_hop": 0.0171376314826917,
+    "b_interact": -0.10523791838733136,
+    "or_interact": 0.9001103443072627,
+    "ci_or_interact_lo": 0.705697628036495,
+    "ci_or_interact_hi": 1.1480818409198899,
+    "p_interact": 0.3966250709694361
   },
   "hop_annotation_kappa": {
     "n_sample": 50,
@@ -350,33 +350,205 @@
     },
     "CoT": {
       "1": {
-        "correct": 0.323,
-        "omission": 0.661,
-        "hallucination": 0.0,
-        "reasoning_error": 0.016,
-        "n": 62
+        "correct": 0.288,
+        "omission": 0.676,
+        "hallucination": 0.009,
+        "reasoning_error": 0.027,
+        "n": 111
       },
       "2": {
-        "correct": 0.179,
-        "omission": 0.75,
+        "correct": 0.174,
+        "omission": 0.739,
         "hallucination": 0.0,
-        "reasoning_error": 0.071,
-        "n": 28
+        "reasoning_error": 0.087,
+        "n": 46
       },
       "3": {
-        "correct": 0.062,
-        "omission": 0.875,
+        "correct": 0.095,
+        "omission": 0.833,
         "hallucination": 0.0,
-        "reasoning_error": 0.062,
-        "n": 16
+        "reasoning_error": 0.071,
+        "n": 42
       },
       "4": {
-        "correct": 0.145,
-        "omission": 0.836,
+        "correct": 0.137,
+        "omission": 0.833,
         "hallucination": 0.0,
-        "reasoning_error": 0.018,
-        "n": 55
+        "reasoning_error": 0.029,
+        "n": 102
       }
     }
+  },
+  "clinician_hop_kappa": {
+    "n_sample": 50,
+    "pairwise_clinician": {
+      "kappa_A_B": {
+        "kappa": 0.458,
+        "se": 0.0981,
+        "ci_lo": 0.266,
+        "ci_hi": 0.65,
+        "p_observed": 0.6,
+        "p_expected": 0.262,
+        "n": 50
+      },
+      "kappa_A_C": {
+        "kappa": 0.413,
+        "se": 0.1055,
+        "ci_lo": 0.206,
+        "ci_hi": 0.62,
+        "p_observed": 0.58,
+        "p_expected": 0.285,
+        "n": 50
+      },
+      "kappa_B_C": {
+        "kappa": 0.589,
+        "se": 0.1008,
+        "ci_lo": 0.391,
+        "ci_hi": 0.786,
+        "p_observed": 0.7,
+        "p_expected": 0.27,
+        "n": 50
+      },
+      "mean_pairwise_kappa": 0.487
+    },
+    "per_clinician_vs_claude": {
+      "clinician_A": {
+        "kappa": 0.58,
+        "se": 0.1057,
+        "ci_lo": 0.373,
+        "ci_hi": 0.787,
+        "p_observed": 0.7,
+        "p_expected": 0.285,
+        "n": 50
+      },
+      "clinician_B": {
+        "kappa": 0.725,
+        "se": 0.102,
+        "ci_lo": 0.525,
+        "ci_hi": 0.924,
+        "p_observed": 0.8,
+        "p_expected": 0.274,
+        "n": 50
+      },
+      "clinician_C": {
+        "kappa": 0.804,
+        "se": 0.1061,
+        "ci_lo": 0.596,
+        "ci_hi": 1.012,
+        "p_observed": 0.86,
+        "p_expected": 0.286,
+        "n": 50
+      }
+    },
+    "majority_vs_claude_llm": {
+      "kappa": 0.916,
+      "se": 0.1061,
+      "ci_lo": 0.708,
+      "ci_hi": 1.124,
+      "p_observed": 0.94,
+      "p_expected": 0.286,
+      "n": 50
+    },
+    "majority_vs_gpt4o": {
+      "kappa": 0.311,
+      "se": 0.0927,
+      "ci_lo": 0.13,
+      "ci_hi": 0.493,
+      "p_observed": 0.48,
+      "p_expected": 0.245,
+      "n": 50
+    }
+  },
+  "cochran_armitage_clinician_majority_50q": {
+    "n_questions": 37,
+    "ca_zs": {
+      "z": -1.002,
+      "p": 0.3162,
+      "counts": {
+        "1": {
+          "n": 14,
+          "k": 4
+        },
+        "2": {
+          "n": 8,
+          "k": 3
+        },
+        "3": {
+          "n": 2,
+          "k": 0
+        },
+        "4": {
+          "n": 13,
+          "k": 2
+        }
+      }
+    },
+    "ca_et": {
+      "z": -0.622,
+      "p": 0.5341,
+      "counts": {
+        "1": {
+          "n": 14,
+          "k": 3
+        },
+        "2": {
+          "n": 8,
+          "k": 3
+        },
+        "3": {
+          "n": 2,
+          "k": 0
+        },
+        "4": {
+          "n": 13,
+          "k": 2
+        }
+      }
+    },
+    "ca_claude_labels_zs_50q": {
+      "z": -1.073,
+      "p": 0.2832,
+      "counts": {
+        "1": {
+          "n": 16,
+          "k": 4
+        },
+        "2": {
+          "n": 6,
+          "k": 3
+        },
+        "3": {
+          "n": 3,
+          "k": 1
+        },
+        "4": {
+          "n": 12,
+          "k": 1
+        }
+      }
+    },
+    "ca_claude_labels_et_50q": {
+      "z": -0.724,
+      "p": 0.4692,
+      "counts": {
+        "1": {
+          "n": 16,
+          "k": 4
+        },
+        "2": {
+          "n": 6,
+          "k": 2
+        },
+        "3": {
+          "n": 3,
+          "k": 0
+        },
+        "4": {
+          "n": 12,
+          "k": 2
+        }
+      }
+    },
+    "note": "CA trend test re-run on 50-question stratified subset using clinician majority-vote hop labels. Claude label re-run on same subset shown for comparison."
   }
 }
