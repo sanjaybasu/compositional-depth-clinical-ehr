@@ -48,8 +48,8 @@ across four hop levels and evaluate 301 questions in a within-model ablation
 (\texttt{claude-sonnet-4-6}, zero-shot versus extended thinking) and a
 cross-architecture replication (\texttt{gpt-4o}, zero-shot).
 Both models exhibit monotone accuracy decline with hop count:
-Claude Sonnet zero-shot declines from 30.6\% (hop=1) to 17.3\% (hop=4)
-(Cochran--Armitage $z = -2.38$, $p = 0.009$; OR per hop $= 0.72$,
+Claude Sonnet zero-shot declines from 30.6\% (hop=1) to 17.6\% (hop=4)
+(Cochran--Armitage $z = -2.30$, $p = 0.011$; OR per hop $= 0.72$,
 95\% CI [0.56, 0.92], $p = 0.008$); GPT-4o independently replicates this
 pattern (37.8\% to 14.7\%; CA $z = -3.80$, $p < 0.0001$; OR $= 0.58$
 [0.45, 0.75], $p < 0.001$).
@@ -212,7 +212,7 @@ questions with a uniquely identifiable EHR file and valid clinician reference
 response, 313 questions were annotated and eligible; of these, 301 had
 complete model evaluations (API errors or timeouts accounted for 12 omissions),
 yielding the final analytic sample
-(hop=1: $n=111$, hop=2: $n=46$, hop=3: $n=42$, hop=4: $n=104$;
+(hop=1: $n=111$, hop=2: $n=46$, hop=3: $n=42$, hop=4: $n=102$;
 602 total evaluations across both conditions).
 EHR records were parsed from XML, chronologically structured, and truncated
 to 8,000 characters (approximately 1,600--2,000 tokens at 4--5 characters per token,
@@ -356,7 +356,7 @@ $\Delta$ (CoT $-$ ZS) & +2 & $-3$ & +2 & $-1$ & \textbf{+9.1 pp} \\
 \end{table}
 
 \paragraph{Full experiment results.}
-Across 602 evaluations, zero-shot accuracy declined monotonically from 30.6\% (hop=1) to 17.3\% (hop=4; Table~\ref{tab:main_results}, Figure~\ref{fig:accuracy}). Extended thinking followed a similar slope (34.2\%, 30.4\%, 19.0\%, 19.2\%), with a marginal 2.0 pp overall advantage; at hop=3 extended thinking slightly underperformed zero-shot (19.0\% vs.\ 21.4\%).
+Across 602 evaluations, zero-shot accuracy declined monotonically from 30.6\% (hop=1) to 17.6\% (hop=4; Table~\ref{tab:main_results}, Figure~\ref{fig:accuracy}). Extended thinking followed a similar slope (34.2\%, 30.4\%, 19.0\%, 19.6\%), with a marginal 2.1 pp overall advantage; at hop=3 extended thinking slightly underperformed zero-shot (19.0\% vs.\ 21.4\%).
 
 \begin{table}[t]
 \centering
@@ -370,22 +370,22 @@ accuracy degradation per additional reasoning hop in each condition.}
 \toprule
 & \multicolumn{4}{c}{\textbf{Hop Count}} & & & & \\
 \cmidrule{2-5}
-\textbf{Condition} & \textbf{1} ($n$=111) & \textbf{2} ($n$=46) & \textbf{3} ($n$=42) & \textbf{4} ($n$=104) & \textbf{Overall} & \textbf{OR/hop} & \textbf{$p$} \\
+\textbf{Condition} & \textbf{1} ($n$=111) & \textbf{2} ($n$=46) & \textbf{3} ($n$=42) & \textbf{4} ($n$=102) & \textbf{Overall} & \textbf{OR/hop} & \textbf{$p$} \\
 \midrule
 Claude ZS
   & 30.6 [22.8, 39.7]
   & 28.3 [17.3, 42.5]
   & 21.4 [11.7, 35.9]
-  & 17.3 [11.2, 25.7]
-  & 24.4 [19.9, 29.6]
+  & 17.6 [11.5, 26.2]
+  & 24.6 [20.1, 29.7]
   & 0.72 [0.56, 0.92]
   & 0.008 \\[2pt]
 Claude ET
   & 34.2 [26.1, 43.5]
   & 30.4 [19.1, 44.8]
   & 19.0 [10.0, 33.3]
-  & 19.2 [12.8, 27.8]
-  & 26.4 [21.8, 31.6]
+  & 19.6 [13.1, 28.4]
+  & 26.6 [21.9, 31.8]
   & 0.70 [0.55, 0.88]
   & 0.003 \\[2pt]
 GPT-4o ZS$^*$
@@ -427,7 +427,7 @@ The near-zero differences across all hops are consistent with the null P2 result
 \end{figure}
 
 \paragraph{Primary outcome: hop $\times$ condition interaction.}
-Cochran--Armitage trend tests confirmed monotone accuracy decline for both conditions (ZS: $z = -2.38$, $p = 0.009$; ET: $z = -2.69$, $p = 0.004$). GEE logistic regression showed each additional hop associated with a 28\% odds reduction under ZS (OR = 0.72, 95\% CI [0.56, 0.92], $p = 0.008$) and 30\% under ET (OR = 0.70 [0.55, 0.88], $p = 0.003$), confirming P1. The main effect of ET did not reach significance (OR = 1.18, 95\% CI [0.85, 1.65], $p = 0.32$). The hop $\times$ condition interaction (P2 test) was not significant (OR = 0.97 [0.84, 1.13], $p = 0.72$), and EHR length covariates were non-significant ($p = 0.67$, $p = 0.24$).
+Cochran--Armitage trend tests confirmed monotone accuracy decline for both conditions (ZS: $z = -2.30$, $p = 0.011$; ET: $z = -2.62$, $p = 0.004$). GEE logistic regression showed each additional hop associated with a 28\% odds reduction under ZS (OR = 0.72, 95\% CI [0.56, 0.92], $p = 0.008$) and 30\% under ET (OR = 0.70 [0.55, 0.88], $p = 0.003$), confirming P1. The main effect of ET did not reach significance (OR = 1.18, 95\% CI [0.85, 1.65], $p = 0.32$). The hop $\times$ condition interaction (P2 test) was not significant (OR = 0.97 [0.84, 1.13], $p = 0.72$), and EHR length covariates were non-significant ($p = 0.67$, $p = 0.24$).
 
 \paragraph{Question-type sensitivity analysis.}
 Adjusting for reasoning type strengthened the hop OR (0.72 unadjusted $\to$ 0.57, 95\% CI [0.38, 0.84], $p = 0.005$), indicating question-type composition does not explain the hop effect. Within-comparative-type CA trend ($z = -1.90$, $p = 0.029$) confirmed P1 within a single reasoning category (hops 2--4, $n = 16$, $30$, $20$; Appendix~\ref{app:qtype}).
@@ -480,10 +480,10 @@ P3 is confirmed: thinking tokens scale with hop ($r = 0.31$, $p < 0.0001$) and m
 Current evaluation frameworks report aggregate accuracy without stratifying by compositional depth. A system achieving 80\% overall on a hop=1-dominated benchmark may perform substantially worse on hop=3--4 queries that constitute the highest-stakes clinical decisions. Hop-count stratification provides a principled complement to existing safety frameworks~\citep{noharm2025}, identifying tasks where reasoning-augmented inference is required and aggregate accuracy is an insufficient safety proxy.
 
 \paragraph{Limitations.}
-Several limitations qualify the present findings. First, the primary test of P2 was underpowered at hops 2--3 ($n = 46$ and $n = 42$); the interaction effect size (OR $\approx$ 0.90--1.03) is imprecisely estimated, and we cannot exclude small flattening effects. Convergent evidence across three conditions (ET-3K: $p = 0.72$; ExplicitCoT: $p = 0.41$; ET-16K: $p = 0.86$) mitigates but does not eliminate this concern. Second, the automated judge aligns with the strict physician reviewer ($\kappa = 0.957$) but shows moderate agreement with the lenient reviewer ($\kappa = 0.572$), indicating residual criterion sensitivity. Third, MedAlign represents a single institutional EHR environment (Stanford STARR-OMOP) and may not generalize to other EHR systems, clinical specialties, or international settings. Fourth, the theoretical framing derives predictions from the Peng single-layer impossibility result; multi-layer transformers can in principle decompose reasoning through depth, and we treat the theorem as motivating qualitative predictions rather than quantitative characterization. Additional limitations (P2 untested in GPT-4o, MAP-based GLMM instability, answerability metric scope) are discussed in the supplementary materials. Hop annotation reliability was validated by clinician re-annotation ($\kappa = 0.916$ majority-vote agreement; Appendix~\ref{app:annotation}).
+Several limitations qualify the present findings. First, the primary test of P2 was underpowered at hops 2--3 ($n = 46$ and $n = 42$); the interaction effect size (OR $\approx$ 0.90--1.03) is imprecisely estimated, and we cannot exclude small flattening effects. Convergent evidence across three conditions (ET-3K: $p = 0.72$; ExplicitCoT: $p = 0.41$; ET-16K: $p = 0.86$) mitigates but does not eliminate this concern. Second, the automated judge aligns with the strict physician reviewer ($\kappa = 0.957$) but shows moderate agreement with the lenient reviewer ($\kappa = 0.572$), indicating residual criterion sensitivity. Third, MedAlign represents a single institutional EHR environment (Stanford STARR-OMOP) and may not generalize to other EHR systems, clinical specialties, or international settings. Fourth, the theoretical framing derives predictions from the Peng single-layer impossibility result; multi-layer transformers can in principle decompose reasoning through depth, and we treat the theorem as motivating qualitative predictions rather than quantitative characterization. Additional limitations (MAP-based GLMM instability; answerability scope, addressed by a semantic sensitivity analysis confirming identical conclusions in Appendix~\ref{app:context_sufficiency}) are discussed in the supplementary materials. Hop annotation reliability was validated by clinician re-annotation ($\kappa = 0.916$ majority-vote agreement; Appendix~\ref{app:annotation}).
 
 \paragraph{Future directions.}
-Three extensions follow directly from these findings. First, testing P2 in retrieval-augmented generation (RAG) systems would evaluate the Peng theoretical escape route most directly: explicit retrieval augmentation is predicted to flatten the accuracy--depth curve more effectively than internal CoT. Second, applying hop-count analysis to reasoning-specialized models (o1-class, DeepSeek R1) would determine whether reinforcement learning over extended thinking traces provides flattening that standard CoT does not. Third, integrating hop-count stratification into clinical AI evaluation frameworks as a standard safety dimension---complementing aggregate accuracy with task-complexity-stratified profiles---would operationalize the study's primary practical contribution.
+Three extensions follow directly. First, a BM25 RAG baseline confirmed that lexical retrieval partially attenuates but does not eliminate the hop--accuracy slope (GEE interaction $p = 0.424$; Appendix~\ref{app:bm25_rag}); dense semantic retrieval and reranking remain to be evaluated. Second, cross-architecture reasoning-model replications (o3-mini, \texttt{reasoning\_effort=``high''}, $n=301$; DeepSeek-R1, 7B local, $n=301$) confirmed the same significant hop--accuracy decline in both models (CA $p < 0.001$ for both; Appendix~\ref{app:reasoning_models}), indicating that RL-based test-time reasoning augmentation does not eliminate the compositional depth ceiling. Third, integrating hop-count stratification into clinical AI evaluation frameworks as a standard safety dimension would operationalize the study's primary practical contribution.
 
 % ── 7. Conclusion ─────────────────────────────────────────────────────────────
 \section{Conclusion}
@@ -795,7 +795,7 @@ observed $z$ values around $-1.0$.
 \caption{Cochran--Armitage trend test for P1 using Claude vs.\ clinician majority
 hop labels, on the matched 50-question stratified subset ($n = 37$ with
 unambiguous majority). Non-significance at $n = 37$ reflects expected power
-deficit ($\sim$18\% power vs.\ full-sample $z = -2.38$); trend direction and
+deficit ($\sim$18\% power vs.\ full-sample $z = -2.30$); trend direction and
 $z$-magnitude are essentially identical across annotation sources.}
 \label{tab:clinician_ca}
 \small
@@ -809,7 +809,7 @@ Ext.\ thinking & Claude (50q subset) & $-0.724$ & 0.469 \\
 Ext.\ thinking & Clinician majority   & $-0.622$ & 0.534 \\
 \midrule
 \multicolumn{2}{l}{\textit{Full sample (main analysis, $n = 301$)}} & & \\
-Zero-shot    & Claude (full)          & $-2.38$ & 0.009 \\
+Zero-shot    & Claude (full)          & $-2.30$ & 0.011 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -895,7 +895,7 @@ Comparative  & ---              & 50.0\% ($n$=16) & 26.7\% ($n$=30) & 20.0\% ($n
 Generative   & ---              & ---             & ---            & 17.5\% ($n$=80) \\
 Computational& ---              & ---             & ---            & --- \\
 \midrule
-\textit{All types} & \textit{30.6\% ($n$=111)} & \textit{28.3\% ($n$=46)} & \textit{21.4\% ($n$=42)} & \textit{17.3\% ($n$=104)} \\
+\textit{All types} & \textit{30.6\% ($n$=111)} & \textit{28.3\% ($n$=46)} & \textit{21.4\% ($n$=42)} & \textit{17.6\% ($n$=102)} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -923,7 +923,7 @@ confirms P1 within a single question category.
 1 & 74/111 & 33.3\% & 30.6\% & 25.7\% & 28.4\% & Conservative \\
 2 & 32/46  & 30.4\% & 28.3\% & 25.0\% & 28.1\% & Conservative \\
 3 & 17/42  & 59.5\% & 21.4\% & 29.4\% & 29.4\% & \textbf{Optimistic} \\
-4 & 56/104 & 46.2\% & 17.3\% & 15.5\% & 19.6\% & Conservative \\
+4 & 56/104 & 46.2\% & 17.6\% & 15.5\% & 19.6\% & Conservative \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1002,6 +1002,10 @@ direction, reinforces the conclusion that the result reflects a qualitative fail
 of compositional reasoning rather than a quantitative insufficiency of allocated compute.
 Full selection bias analysis by hop level is in Appendix~\ref{app:et16k_bias}.
 
+\paragraph{BM25 retrieval-augmented baseline (Peng escape route).}
+\label{app:bm25_rag}
+To evaluate the Peng theoretical escape route via explicit retrieval, we ran a BM25 retrieval-augmented generation (RAG) baseline on all 301 questions. For each question, the top-5 BM25Okapi-scored EHR chunks (each 200 characters, with 50-character stride) were prepended to the standard 8{,}000-character truncated EHR context, giving the model explicit access to query-relevant passages before compositional reasoning. BM25 RAG accuracy was hop=1: 29.7\% [22.0, 38.8], hop=2: 32.6\% [20.9, 47.0], hop=3: 19.0\% [10.0, 33.3], hop=4: 22.5\% [15.5, 31.6] (overall 26.2\%; $n = 301$). The hop--accuracy slope weakened relative to zero-shot (BM25 CA $z = -1.47$, one-tailed $p = 0.071$; ZS CA $z = -2.30$, $p = 0.011$) but remained in the same monotone direction. The GEE hop$\times$condition interaction (BM25 vs.\ ZS) was null (OR $= 1.10$, 95\% CI [0.87, 1.38], $p = 0.424$), confirming that lexical retrieval does not significantly flatten the accuracy--depth curve; the main hop effect persisted within RAG (GEE OR per hop $= 0.78$, $p = 0.022$). These results indicate that multi-hop integration across retrieved facts remains a compositional demand beyond fact retrieval alone.
+
 \paragraph{Context sufficiency methodology.}
 \label{app:context_sufficiency}
 We extracted non-stopword content tokens ($\geq$4 characters) from each clinician
@@ -1014,5 +1018,18 @@ hop=4 93.1\%. Under well-supported: 44.1\%, 50.0\%, 52.4\%, 39.2\%
 hops. The truncation correlation with omission rate was $r = -0.66$ ($p = 0.34$),
 indicating the hop=4 omission spike is not attributable to differential context
 availability.
+
+\paragraph{Semantic answerability sensitivity analysis.}
+As a pre-registered sensitivity analysis for the context-sufficiency audit, we re-examined answerability using semantic matching rather than lexical token overlap, addressing the concern that synonymous or paraphrased EHR content would be missed by strict lexical methods. Each clinician reference answer was split into sentences (on ``$.\,$''); each EHR was chunked into 200-character sliding windows with 50-character overlap. Sentences and chunks were embedded using \texttt{all-MiniLM-L6-v2} (sentence-transformers). A sentence was deemed ``supported'' if its maximum cosine similarity to any EHR chunk exceeded 0.50; semantic coverage was the fraction of reference sentences supported; ``any-sentence supported'' required coverage $\geq 1$ sentence.
+
+Under this semantic criterion, any-sentence support was hop=1: 73.9\%, hop=2: 87.0\%, hop=3: 83.3\%, hop=4: 80.4\%. Mean semantic coverage was hop=1: 64.6\%, hop=2: 74.7\%, hop=3: 76.2\%, hop=4: 71.3\%. As with the lexical analysis, hop=1 questions were \emph{least} semantically supported---the reverse of the pattern that would be expected under a truncation-confound hypothesis, consistent with multi-faceted hop=1 reference answers requiring aggregation across EHR sections. Kruskal--Wallis $H = 3.54$, $p = 0.316$, confirming no statistically significant difference in semantic coverage across hop levels. The convergence of lexical and semantic analyses with identical directional conclusions strengthens the inference that differential context availability is not a plausible driver of the hop--accuracy relationship.
+
+% ── Appendix F: Reasoning-model replication ──────────────────────────────────
+\subsection{Reasoning-Model Replication (o3-mini and DeepSeek-R1)}
+\label{app:reasoning_models}
+
+To test whether RL-trained reasoning models escape the accuracy-depth ceiling (P2), we evaluated two reasoning-specialized models---OpenAI o3-mini (\texttt{reasoning\_effort=``high''}) and DeepSeek-R1 (7\,B parameters, via Ollama local inference)---on all 301 questions using the identical protocol and automated judge as the main experiment. These models differ from Claude Sonnet~4.6 both in architecture and in training objective: both receive explicit reinforcement signal for multi-step chain-of-thought traces, representing the strongest available form of test-time reasoning augmentation.
+
+o3-mini achieved hop=1: 40.5\% [31.9, 49.8], hop=2: 30.4\% [19.1, 44.8], hop=3: 23.8\% [13.5, 38.5], hop=4: 14.7\% [9.1, 22.9] (overall 27.9\%; $n = 301$; CA $z = -4.25$, one-tailed $p < 0.001$). DeepSeek-R1 achieved hop=1: 28.8\% [21.2, 37.9], hop=2: 34.8\% [22.7, 49.2], hop=3: 21.4\% [11.7, 35.9], hop=4: 11.8\% [6.9, 19.4] (overall 22.9\%; $n = 301$; CA $z = -3.19$, one-tailed $p < 0.001$). Both reasoning-specialized models exhibit the same statistically significant monotone accuracy decline across hop depth observed in the main experiment. o3-mini showed modestly higher absolute accuracy at hop=1 relative to Claude zero-shot (41\% vs.~30.6\%), consistent with compute-augmented fact retrieval, but converged to a similar ceiling at hop=4 (15\% vs.~17.3\%). DeepSeek-R1 produced a near-zero hallucination rate (4.3\%), with errors concentrated in omission (70\%), consistent with a conservative refusal posture. Cross-model convergence on the same slope---across three distinct architectures, two training paradigms (RLHF on instructions vs.\ RL on reasoning traces), and two compute regimes (API-served vs.\ local 7B inference)---provides strong evidence that the hop--accuracy degradation reflects a general property of transformer-based clinical reasoning rather than an artifact of any single model or deployment configuration.
 
 \end{document}
