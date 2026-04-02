@@ -1,0 +1,382 @@
+{
+  "accuracy": {
+    "zs_hop1": {
+      "acc": 0.3063,
+      "acc_pct": 30.6,
+      "lo": 0.228,
+      "hi": 0.397,
+      "n": 111,
+      "k": 34
+    },
+    "zs_hop2": {
+      "acc": 0.2826,
+      "acc_pct": 28.3,
+      "lo": 0.173,
+      "hi": 0.425,
+      "n": 46,
+      "k": 13
+    },
+    "zs_hop3": {
+      "acc": 0.2143,
+      "acc_pct": 21.4,
+      "lo": 0.117,
+      "hi": 0.359,
+      "n": 42,
+      "k": 9
+    },
+    "zs_hop4": {
+      "acc": 0.1765,
+      "acc_pct": 17.6,
+      "lo": 0.115,
+      "hi": 0.262,
+      "n": 102,
+      "k": 18
+    },
+    "et_hop1": {
+      "acc": 0.3423,
+      "acc_pct": 34.2,
+      "lo": 0.261,
+      "hi": 0.435,
+      "n": 111,
+      "k": 38
+    },
+    "et_hop2": {
+      "acc": 0.3043,
+      "acc_pct": 30.4,
+      "lo": 0.191,
+      "hi": 0.448,
+      "n": 46,
+      "k": 14
+    },
+    "et_hop3": {
+      "acc": 0.1905,
+      "acc_pct": 19.0,
+      "lo": 0.1,
+      "hi": 0.333,
+      "n": 42,
+      "k": 8
+    },
+    "et_hop4": {
+      "acc": 0.1961,
+      "acc_pct": 19.6,
+      "lo": 0.131,
+      "hi": 0.284,
+      "n": 102,
+      "k": 20
+    }
+  },
+  "benefit_pp": {
+    "hop1": 3.6,
+    "hop2": 2.2,
+    "hop3": -2.4,
+    "hop4": 2.0
+  },
+  "cochran_armitage_zs": {
+    "z": -2.304,
+    "p": 0.0212
+  },
+  "cochran_armitage_et": {
+    "z": -2.619,
+    "p": 0.0088
+  },
+  "pairwise_fisher_zs": {
+    "zs_hop1v2": {
+      "or": 1.121,
+      "p_raw": 0.8494,
+      "p_bonf": 1.0
+    },
+    "zs_hop2v3": {
+      "or": 1.444,
+      "p_raw": 0.6228,
+      "p_bonf": 1.0
+    },
+    "zs_hop3v4": {
+      "or": 1.273,
+      "p_raw": 0.6412,
+      "p_bonf": 1.0
+    },
+    "zs_hop1v4": {
+      "or": 2.061,
+      "p_raw": 0.0374,
+      "p_bonf": 0.1497
+    }
+  },
+  "glmm_primary": {
+    "method": "BinomialBayesMixedGLM",
+    "b_hop": -0.282612646679584,
+    "or_hop": 0.7538117227888758,
+    "p_hop": 0.006185701047529246,
+    "b_interact": -0.8361040892223804,
+    "or_interact": 0.4333957096461955,
+    "p_interact": 9.293333214088761e-09,
+    "ci_or_interact_lo": 0.32580812749529425,
+    "ci_or_interact_hi": 0.5765106063612311,
+    "n_random_effects": 301
+  },
+  "gee_sensitivity": {
+    "method": "GEE",
+    "b_hop": -0.32657146590239816,
+    "or_hop": 0.7213928182176194,
+    "ci_or_hop_lo": 0.5658887383484151,
+    "ci_or_hop_hi": 0.9196288296791422,
+    "p_hop": 0.008380469566303264,
+    "b_interact": -0.027209544063690493,
+    "or_interact": 0.973157300822377,
+    "p_interact": 0.723668483666288,
+    "ci_or_interact_lo": 0.8369040329626597,
+    "ci_or_interact_hi": 1.131593462145675
+  },
+  "ehr_truncation": {
+    "by_hop": {
+      "1": {
+        "n": 111,
+        "mean_ehr_chars": 444818.0,
+        "mean_pct_kept": 0.042,
+        "mean_trunc_frac": 0.958,
+        "omission_rate": 0.523
+      },
+      "2": {
+        "n": 46,
+        "mean_ehr_chars": 372542.0,
+        "mean_pct_kept": 0.04,
+        "mean_trunc_frac": 0.96,
+        "omission_rate": 0.478
+      },
+      "3": {
+        "n": 42,
+        "mean_ehr_chars": 368512.0,
+        "mean_pct_kept": 0.047,
+        "mean_trunc_frac": 0.953,
+        "omission_rate": 0.548
+      },
+      "4": {
+        "n": 102,
+        "mean_ehr_chars": 357444.0,
+        "mean_pct_kept": 0.046,
+        "mean_trunc_frac": 0.954,
+        "omission_rate": 0.725
+      }
+    },
+    "r_trunc_omission": -0.663,
+    "p_trunc_omission": 0.3372
+  },
+  "thinking_tokens": {
+    "hop1": {
+      "mean": 69.8,
+      "sd": 72.1
+    },
+    "hop2": {
+      "mean": 83.0,
+      "sd": 65.6
+    },
+    "hop3": {
+      "mean": 127.0,
+      "sd": 60.4
+    },
+    "hop4": {
+      "mean": 135.1,
+      "sd": 121.7
+    }
+  },
+  "thinking_token_pearson_r": 0.311,
+  "thinking_token_pearson_p": 0.0,
+  "budget_tokens": 3000,
+  "budget_words_capacity": 2308.0,
+  "mean_words_used_range": [
+    54.0,
+    104.0
+  ],
+  "judge_sensitivity": {
+    "strict_correct_frac_adjudication": 0.14,
+    "lenient_correct_frac_adjudication": 0.26,
+    "scale_factor": 1.857,
+    "note": "Accuracy estimates under lenient criterion are ~1.86x higher, but qualitative pattern unchanged"
+  },
+  "new_conditions": {
+    "et16k": {
+      "hop1": {
+        "acc": 0.3793,
+        "n": 29
+      },
+      "hop2": {
+        "acc": 0.4545,
+        "n": 11
+      },
+      "hop3": {
+        "acc": 0.4,
+        "n": 10
+      },
+      "hop4": {
+        "acc": 0.2121,
+        "n": 33
+      }
+    },
+    "explicit_cot": {
+      "hop1": {
+        "acc": 0.3226,
+        "n": 62,
+        "ci_lo": 0.2195,
+        "ci_hi": 0.4463
+      },
+      "hop2": {
+        "acc": 0.1786,
+        "n": 28,
+        "ci_lo": 0.0788,
+        "ci_hi": 0.3559
+      },
+      "hop3": {
+        "acc": 0.0625,
+        "n": 16,
+        "ci_lo": 0.0111,
+        "ci_hi": 0.2833
+      },
+      "hop4": {
+        "acc": 0.1455,
+        "n": 55,
+        "ci_lo": 0.0756,
+        "ci_hi": 0.2616
+      },
+      "ca_z": -2.451,
+      "ca_p": 0.0142
+    }
+  },
+  "cot_gee_results": {
+    "method": "GEE_cot_vs_zs",
+    "b_hop": -0.27059760300340086,
+    "or_hop": 0.7629234327437645,
+    "ci_or_hop_lo": 0.6007708354972298,
+    "ci_or_hop_hi": 0.9688422437280799,
+    "p_hop": 0.02644559432411404,
+    "b_interact": -0.14767398240359234,
+    "or_interact": 0.8627123284989991,
+    "ci_or_interact_lo": 0.6122509742770413,
+    "ci_or_interact_hi": 1.2156331194458574,
+    "p_interact": 0.3986772873135256
+  },
+  "hop_annotation_kappa": {
+    "n_sample": 50,
+    "kappa_claude_orig_vs_2ndpass": {
+      "kappa": 0.787,
+      "se": 0.0935,
+      "ci_lo": 0.603,
+      "ci_hi": 0.97,
+      "p_observed": 0.84,
+      "p_expected": 0.25,
+      "n": 50
+    },
+    "kappa_claude_orig_vs_gpt4o": {
+      "kappa": 0.464,
+      "se": 0.0879,
+      "ci_lo": 0.292,
+      "ci_hi": 0.637,
+      "p_observed": 0.6,
+      "p_expected": 0.253,
+      "n": 50
+    },
+    "kappa_claude_2ndpass_vs_gpt4o": {
+      "kappa": 0.581,
+      "se": 0.092,
+      "ci_lo": 0.401,
+      "ci_hi": 0.761,
+      "p_observed": 0.7,
+      "p_expected": 0.284,
+      "n": 50
+    },
+    "percent_exact_claude_orig_vs_2ndpass": 0.84,
+    "percent_exact_claude_orig_vs_gpt4o": 0.6,
+    "percent_adjacent_claude_orig_vs_2ndpass": 0.98,
+    "percent_adjacent_claude_orig_vs_gpt4o": 0.88
+  },
+  "error_types": {
+    "ZS": {
+      "1": {
+        "correct": 0.306,
+        "omission": 0.523,
+        "hallucination": 0.126,
+        "reasoning_error": 0.045,
+        "n": 111
+      },
+      "2": {
+        "correct": 0.283,
+        "omission": 0.478,
+        "hallucination": 0.152,
+        "reasoning_error": 0.109,
+        "n": 46
+      },
+      "3": {
+        "correct": 0.214,
+        "omission": 0.548,
+        "hallucination": 0.048,
+        "reasoning_error": 0.19,
+        "n": 42
+      },
+      "4": {
+        "correct": 0.176,
+        "omission": 0.725,
+        "hallucination": 0.059,
+        "reasoning_error": 0.039,
+        "n": 102
+      }
+    },
+    "ET": {
+      "1": {
+        "correct": 0.342,
+        "omission": 0.459,
+        "hallucination": 0.099,
+        "reasoning_error": 0.099,
+        "n": 111
+      },
+      "2": {
+        "correct": 0.304,
+        "omission": 0.478,
+        "hallucination": 0.13,
+        "reasoning_error": 0.087,
+        "n": 46
+      },
+      "3": {
+        "correct": 0.19,
+        "omission": 0.548,
+        "hallucination": 0.071,
+        "reasoning_error": 0.19,
+        "n": 42
+      },
+      "4": {
+        "correct": 0.196,
+        "omission": 0.716,
+        "hallucination": 0.069,
+        "reasoning_error": 0.029,
+        "n": 102
+      }
+    },
+    "CoT": {
+      "1": {
+        "correct": 0.323,
+        "omission": 0.661,
+        "hallucination": 0.0,
+        "reasoning_error": 0.016,
+        "n": 62
+      },
+      "2": {
+        "correct": 0.179,
+        "omission": 0.75,
+        "hallucination": 0.0,
+        "reasoning_error": 0.071,
+        "n": 28
+      },
+      "3": {
+        "correct": 0.062,
+        "omission": 0.875,
+        "hallucination": 0.0,
+        "reasoning_error": 0.062,
+        "n": 16
+      },
+      "4": {
+        "correct": 0.145,
+        "omission": 0.836,
+        "hallucination": 0.0,
+        "reasoning_error": 0.018,
+        "n": 55
+      }
+    }
+  }
+}
