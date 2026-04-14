@@ -66,6 +66,8 @@ plt.rcParams.update({
     "axes.spines.right": False,
     "axes.grid": False,
     "figure.dpi": 300,
+    "pdf.fonttype": 42,   # TrueType (Type 42) — required for NeurIPS PDF compliance
+    "ps.fonttype": 42,
 })
 
 HOPS = [1, 2, 3, 4]
@@ -87,6 +89,16 @@ if has_et16k:
     print(f"ET-16K data: {len(df_et16k)} rows")
 if has_cot:
     print(f"ExplicitCoT data: {len(df_cot)} rows")
+
+# ── Load cross-architecture replications ────────────────────────────────────
+GPT4O_CSV  = BASE_DIR / "results/gpt4o_zeroshot_raw.csv"
+GPT54_CSV  = BASE_DIR / "results/gpt54_zeroshot_raw.csv"
+has_gpt4o  = GPT4O_CSV.exists()
+has_gpt54  = GPT54_CSV.exists()
+df_gpt4o  = pd.read_csv(GPT4O_CSV).drop_duplicates("instruction_id")  if has_gpt4o  else None
+df_gpt54  = pd.read_csv(GPT54_CSV).drop_duplicates("instruction_id")  if has_gpt54  else None
+if has_gpt4o:  print(f"GPT-4o data: {len(df_gpt4o)} rows")
+if has_gpt54:  print(f"GPT-5.4 data: {len(df_gpt54)} rows")
 
 # ── Load hop annotation reliability if available ──────────────────────────────
 hop_kappa = None
@@ -117,10 +129,12 @@ def hop_stats(d):
         out[h] = {"acc": k/n if n > 0 else 0, "lo": lo, "hi": hi, "n": n, "k": k}
     return out
 
-stats_zs = hop_stats(df_zs)
-stats_et = hop_stats(df_et)
+stats_zs    = hop_stats(df_zs)
+stats_et    = hop_stats(df_et)
 stats_et16k = hop_stats(df_et16k) if has_et16k else None
 stats_cot   = hop_stats(df_cot)   if has_cot   else None
+stats_gpt4o = hop_stats(df_gpt4o) if has_gpt4o else None
+stats_gpt54 = hop_stats(df_gpt54) if has_gpt54 else None
 
 print("\n=== Accuracy by condition × hop ===")
 for h in HOPS:
@@ -557,6 +571,9 @@ if has_cot:
 # FIGURES
 # ══════════════════════════════════════════════════════════════════════════════
 
+C_GREEN_DARK = "#117733"   # GPT-4o ZS
+C_RED_DARK   = "#882255"   # GPT-5.4 ZS
+
 x = np.array(HOPS)
 y_zs = np.array([stats_zs[h]["acc"] for h in HOPS])
 y_et = np.array([stats_et[h]["acc"] for h in HOPS])
@@ -567,30 +584,40 @@ hi_et = np.array([stats_et[h]["hi"] for h in HOPS])
 
 # ── Figure 1: Accuracy by hop (add Cochran-Armitage annotation) ───────────────
 fig1, ax1 = plt.subplots(figsize=(3.5, 2.8))
-ax1.fill_between(x, y_zs, y_et, alpha=0.12, color=C_ORANGE)
-ax1.plot(x, y_zs, color=C_BLUE,   marker="o", lw=1.8, ms=5, label="Zero-shot")
-ax1.plot(x, y_et, color=C_ORANGE, marker="s", lw=1.8, ms=5, label="Extended Thinking")
+ax1.plot(x, y_zs, color=C_BLUE,   marker="o", lw=1.8, ms=5, label="Claude ZS")
+ax1.plot(x, y_et, color=C_ORANGE, marker="s", lw=1.8, ms=5, label="Claude ET")
 ax1.errorbar(x, y_zs, yerr=[y_zs-lo_zs, hi_zs-y_zs],
              fmt="none", ecolor=C_BLUE,   elinewidth=1.0, capsize=2.5)
 ax1.errorbar(x, y_et, yerr=[y_et-lo_et, hi_et-y_et],
              fmt="none", ecolor=C_ORANGE, elinewidth=1.0, capsize=2.5)
-for h in HOPS:
-    delta = stats_et[h]["acc"] - stats_zs[h]["acc"]
-    mid_y = (stats_et[h]["acc"] + stats_zs[h]["acc"]) / 2
-    ax1.annotate(f"Δ{'+' if delta>=0 else ''}{delta*100:.1f}pp",
-                 xy=(h, mid_y), xytext=(h+0.07, mid_y),
-                 fontsize=6.5, color="dimgray", va="center")
-# Cochran-Armitage annotation
+
+# Add cross-architecture replications if available
+if has_gpt4o and stats_gpt4o:
+    y_g4o = np.array([stats_gpt4o[h]["acc"] for h in HOPS])
+    lo_g4o = np.array([stats_gpt4o[h]["lo"] for h in HOPS])
+    hi_g4o = np.array([stats_gpt4o[h]["hi"] for h in HOPS])
+    ax1.plot(x, y_g4o, color=C_GREEN_DARK, marker="^", lw=1.8, ms=5, label="GPT-4o ZS")
+    ax1.errorbar(x, y_g4o, yerr=[y_g4o-lo_g4o, hi_g4o-y_g4o],
+                 fmt="none", ecolor=C_GREEN_DARK, elinewidth=1.0, capsize=2.5)
+if has_gpt54 and stats_gpt54:
+    y_g54 = np.array([stats_gpt54[h]["acc"] for h in HOPS])
+    lo_g54 = np.array([stats_gpt54[h]["lo"] for h in HOPS])
+    hi_g54 = np.array([stats_gpt54[h]["hi"] for h in HOPS])
+    ax1.plot(x, y_g54, color=C_RED_DARK, marker="D", lw=1.8, ms=5, label="GPT-5.4 ZS")
+    ax1.errorbar(x, y_g54, yerr=[y_g54-lo_g54, hi_g54-y_g54],
+                 fmt="none", ecolor=C_RED_DARK, elinewidth=1.0, capsize=2.5)
+
+# Cochran-Armitage annotation (one-tailed, pre-registered monotone decline)
 ax1.text(0.97, 0.97,
-         f"Cochran-Armitage trend\nz={ca_z_zs:.2f}, p={ca_p_zs:.4f}",
+         f"Cochran-Armitage trend (one-tailed)\nz={ca_z_zs:.2f}, p={ca_p_zs/2:.4f}",
          transform=ax1.transAxes, fontsize=6.5, color="dimgray",
          ha="right", va="top")
 ax1.set_xticks(HOPS)
 ax1.set_xlim(0.6, 4.6)
-ax1.set_ylim(0, 0.52)
+ax1.set_ylim(0, 0.62)
 ax1.set_xlabel("Compositional Reasoning Depth (Hop Count)")
 ax1.set_ylabel("Accuracy")
-ax1.legend(loc="upper right", frameon=False)
+ax1.legend(loc="upper right", frameon=False, fontsize=7)
 fig1.tight_layout()
 fig1.savefig(OUT / "fig1_accuracy_by_hop.pdf", dpi=300, bbox_inches="tight")
 fig1.savefig(OUT / "fig1_accuracy_by_hop.png", dpi=300, bbox_inches="tight")
